@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ABC Dental Clinic - Voice Receptionist</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js"></script>
 </head>
 <body>
   <main class="container">
@@ -16,18 +15,6 @@
     </header>
 
     <section class="card">
-      <div class="status-indicator">
-        <span id="status-dot" class="dot"></span>
-        <span id="status-text">Ready to assist</span>
-      </div>
-
-      <div class="controls">
-        <button id="call-btn" class="btn btn-primary" onclick="toggleCall()">
-          <span id="btn-icon">🎙️</span>
-          <span id="btn-label">Start Call</span>
-        </button>
-      </div>
-
       <div class="clinic-details">
         <h3>Clinic Information</h3>
         <ul>
@@ -36,9 +23,55 @@
           <li><strong>Location:</strong> Bengaluru, Karnataka</li>
         </ul>
       </div>
+      <p style="text-align: center; color: #64748b; font-size: 0.95rem; margin-top: 1.5rem;">
+        Click the floating call button in the bottom-right corner to speak directly with our AI receptionist.
+      </p>
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"
+    defer
+  ></script>
+  <script>
+    var vapiInstance = null;
+    const apiKey = "cb6b7ed1-86cb-4216-a877-72d4850125c0";
+    const assistant = "127b92e3-e1a8-4ec7-a442-6e7903a0256e";
+    const buttonConfig = {
+      position: "bottom-right",
+      offset: "40px",
+      width: "60px",
+      height: "60px",
+      idle: {
+        color: `rgb(14, 165, 233)`,
+        type: "pill",
+        title: "Talk to Receptionist",
+        subtitle: "Click to start call",
+        icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
+      },
+      loading: {
+        color: `rgb(234, 179, 8)`,
+        type: "pill",
+        title: "Connecting...",
+        subtitle: "Please wait",
+        icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+      },
+      active: {
+        color: `rgb(239, 68, 68)`,
+        type: "pill",
+        title: "Call in progress",
+        subtitle: "Click to end",
+        icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+      },
+    };
+
+    window.addEventListener("load", () => {
+      vapiInstance = window.vapiSDK.run({
+        apiKey: apiKey,
+        assistant: assistant,
+        config: buttonConfig,
+      });
+    });
+  </script>
 </body>
 </html>
